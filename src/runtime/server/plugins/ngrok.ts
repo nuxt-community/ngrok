@@ -3,7 +3,7 @@
  */
 import type { NitroApp } from 'nitropack'
 
-import { createNgrokConnection } from '../../../utils'
+import { createNgrokConnection } from '../../../module'
 
 import { useRuntimeConfig } from '#imports'
 import type { ModuleOptions } from '~/src/module'

@@ -2,7 +2,9 @@ import { addServerPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { Config } from '@ngrok/ngrok'
 import { defu } from 'defu'
 
-import { createNgrokConnection } from './utils'
+import { connect } from '@ngrok/ngrok'
+import { colors } from 'consola/utils'
+import { consola } from 'consola'
 
 export interface ModuleOptions extends Config {
   /**
@@ -44,3 +46,13 @@ export default defineNuxtModule<ModuleOptions>({
     }
   },
 })
+
+export function createNgrokConnection(options: ModuleOptions) {
+  connect({
+    ...options,
+  }).then((listener) => {
+    consola.success(colors.green('Ngrok connected at'), colors.blue(listener.url() ?? 'undefined'))
+  }).catch((error) => {
+    consola.error(colors.red('Ngrok connection error:'), error)
+  })
+}
